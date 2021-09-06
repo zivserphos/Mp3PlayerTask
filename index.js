@@ -47,7 +47,7 @@ const player = {
     { id: 1, name: 'Metal', songs: [1, 7, 4] },
     { id: 5, name: 'Israeli', songs: [4, 5] },
   ],
-  numberOfPlaylists: 2,
+  uniqueID: 100,
   numberOfSongs:6,
   playSong(song)
   {
@@ -74,18 +74,20 @@ function removeSong(id)
   {
     throw("shit on your face mother fucker");
   }
-  
 }
 
 function addSong(title, album, artist, duration, id) 
 {
-  if (arguments.length < 4 || !(typeof(id) === "number"))
+  console.log("shit")
+  if (arguments.length <5)
+    {
+      id = player.uniqueID;
+      player.uniqueID+=1;
+    }
+  if (player.songs.findIndex(i => i.id === id) === -1)
   {
-    id = player.numberOfSongs;
-    player.numberOfSongs+=1;
-  }
-  duration.split(":")
-  duartion = parseInt(duartion[0] *60) + parseInt(duartion[1]);
+    duration = duration.split(":")
+    duration = parseInt(duration[0] *60) + parseInt(duration[1]);
 
   let newSong = 
   {
@@ -97,6 +99,12 @@ function addSong(title, album, artist, duration, id)
   }
    player.songs.push(newSong);
    return id;
+  }
+  else
+  {
+   console.log("FSfsa")
+   throw ("your mama begeves");
+  }
 }
 
 function removePlaylist(id) 
@@ -173,3 +181,6 @@ module.exports = {
   searchByQuery,
   searchByDuration,
 }
+
+
+console.log(addSong("shti" , "Shit" , "shitti" , "shti shit"));
