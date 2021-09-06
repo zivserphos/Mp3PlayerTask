@@ -51,14 +51,7 @@ const player = {
   numberOfSongs:6,
   playSong(song)
   {
-    for (let i of player.songs)
-    {
-      if (song[id] === i[id])
-      {
-        return i;
-      }
-    }
-    console.log("Undefined");
+    return player.songs[player.songs.findIndex(i => i[id] === song[id])];
   },
 }
 
@@ -98,8 +91,9 @@ function addSong(title, album, artist, duration, id)
   return id;
 }
 
-function removePlaylist(id) {
-  // your code here
+function removePlaylist(id) 
+{
+  player.playlists.splice(findIndex(i => i[id] === id) , 1);
 }
 
 function createPlaylist(name, id) {
