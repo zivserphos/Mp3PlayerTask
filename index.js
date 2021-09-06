@@ -109,7 +109,16 @@ function addSong(title, album, artist, duration, id)
 
 function removePlaylist(id) 
 {
-  player.playlists.splice(findIndex(i => i[id] === id) , 1);
+  let indexById = player.playlists.findIndex(i => i.id === id)
+  if (indexById === -1)
+  {
+    throw ("motherFucker");
+  }
+  else
+  {
+    player.playlists.splice(indexById , 1);
+  }
+  
 }
 
 function createPlaylist(name, id) 
@@ -183,4 +192,4 @@ module.exports = {
 }
 
 
-console.log(addSong("shti" , "Shit" , "shitti" , "shti shit"));
+console.log(removePlaylist(1));
