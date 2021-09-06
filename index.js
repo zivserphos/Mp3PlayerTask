@@ -15,7 +15,7 @@ const player = {
       duration: 160,
     },
     {
-      id: 6,
+      id: 7,
       title: 'Shiroyama',
       album: 'The Last Stand',
       artist: 'Sabaton',
@@ -69,19 +69,12 @@ function playSong(id)
 
 function removeSong(id)
 {
-  let counter = 0;
-  for (let i in player.songs)
+  player.songs.splice(player.songs.findIndex(i => i[id] === id),1)
+  for (let i of player.playlists)
   {
-     if (player.songs[counter][id] === id)
-     {
-        player.songs.splice(counter,1)
-        console.log("Song Removed");
-        player.numberOfSongs -=1;
-        break;
-     }
-     counter++;
+    i.songs.splice(i.songs.indexOf(id),1)
   }
-  console.log("Song did not remvoed try different ID");
+  
 }
 
 function addSong(title, album, artist, duration, id) 
