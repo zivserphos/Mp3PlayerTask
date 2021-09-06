@@ -15,7 +15,7 @@ const player = {
       duration: 160,
     },
     {
-      id: 7,
+      id: 6,
       title: 'Shiroyama',
       album: 'The Last Stand',
       artist: 'Sabaton',
@@ -47,21 +47,55 @@ const player = {
     { id: 1, name: 'Metal', songs: [1, 7, 4] },
     { id: 5, name: 'Israeli', songs: [4, 5] },
   ],
-  playSong(song) {
+
+  numberOfSongs:6,
+  playSong(song)
+  {
     console.log(/* your code here */)
   },
 }
 
-function playSong(id) {
-  // your code here
+function playSong(id) 
+{
+  console.log(player.songs[id]);
 }
 
-function removeSong(id) {
-  // your code here
+function removeSong(id)
+{
+  let counter = 0;
+  for (let i in player.songs)
+  {
+     if (player.songs[counter][id] === id)
+     {
+        player.songs.splice(counter,1)
+        console.log("Song Removed");
+        player.numberOfSongs -=1;
+        break;
+     }
+     counter++;
+  }
+  console.log("Song did not remvoed try different ID");
 }
 
-function addSong(title, album, artist, duration, id) {
-  // your code here
+function addSong(title, album, artist, duration, id) 
+{
+  if(!(typeof(id) === "number"))
+  {
+    id = player.numberOfSongs(+1);
+  }
+  duration = duration.split(":");
+  duration = parseInt(duration[0]*60) + parseInt(duration[1]);
+
+  player.songs[length] = 
+  {
+      title: title,
+      album: album,
+      artist: artist,
+      duration: duration,
+      id: id
+      
+  }
+  return id;
 }
 
 function removePlaylist(id) {
