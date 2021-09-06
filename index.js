@@ -47,7 +47,7 @@ const player = {
     { id: 1, name: 'Metal', songs: [1, 7, 4] },
     { id: 5, name: 'Israeli', songs: [4, 5] },
   ],
-
+  numberOfPlaylists = 2,
   numberOfSongs:6,
   playSong(song)
   {
@@ -96,8 +96,19 @@ function removePlaylist(id)
   player.playlists.splice(findIndex(i => i[id] === id) , 1);
 }
 
-function createPlaylist(name, id) {
-  // your code here
+function createPlaylist(name, id) 
+{
+  if (!(typeof(id) !== "number"))
+  {
+    id = player.numberOfPlaylists;
+  }
+  player.playlists[player.playlists.length] = 
+  {
+    id: id,
+    name: name
+  }
+  return id;
+
 }
 
 function playPlaylist(id) {
