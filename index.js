@@ -47,7 +47,7 @@ const player = {
     { id: 1, name: 'Metal', songs: [1, 7, 4] },
     { id: 5, name: 'Israeli', songs: [4, 5] },
   ],
-  numberOfPlaylists = 2,
+  numberOfPlaylists: 2,
   numberOfSongs:6,
   playSong(song)
   {
@@ -62,7 +62,7 @@ function playSong(id)
 
 function removeSong(id)
 {
-  player.songs.splice(player.songs.findIndex(i => i[id] === id),1)
+  player.songs.splice(player.songs.findIndex(i => i.id === id) ,1)
   for (let i of player.playlists)
   {
     i.songs.splice(i.songs.indexOf(id),1)
