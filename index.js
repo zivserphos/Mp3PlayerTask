@@ -123,15 +123,37 @@ function removePlaylist(id)
 
 function createPlaylist(name, id) 
 {
-  if (!(typeof(id) !== "number"))
+  if (id === undefined)
   {
-    id = player.numberOfPlaylists;
+    console.log("fs")
+    id = player.uniqueID;
+    console.log(id);
+    while (player.playlists.findIndex(i => i.id === id) !== -1)
+    {
+      console.log("gssg")
+      player.numberOfPlaylists+=1;
+      id = player.numberOfPlaylists;
+    }
   }
-  player.playlists[player.playlists.length] = 
+  if (typeof(id) === "number" && player.playlists.findIndex(i => i.id === id) !== -1)
+  {
+    console.log(typeof(id))
+    console.log("sh")
+    throw ("you moran");
+  }    
+
+  else
+  {
+    console.log("sf")
+    player.playlists[player.playlists.length] = 
   {
     id: id,
-    name: name
+    name: name,
+    songs: []
   }
+  console.log(player.playlists[player.playlists.length-1])
+  }
+  
   return id;
 
 }
@@ -191,5 +213,5 @@ module.exports = {
   searchByDuration,
 }
 
-
-console.log(removePlaylist(1));
+console.log("sjgr");
+console.log(createPlaylist("mandarina"));
