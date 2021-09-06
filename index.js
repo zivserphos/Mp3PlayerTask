@@ -62,33 +62,41 @@ function playSong(id)
 
 function removeSong(id)
 {
-  player.songs.splice(player.songs.findIndex(i => i.id === id) ,1)
-  for (let i of player.playlists)
+  if (player.songs.findIndex(i => i.id === id) !== -1)
   {
-    i.songs.splice(i.songs.indexOf(id),1)
+    player.songs.splice(player.songs.findIndex(i => i.id === id) ,1)
+    for (let i of player.playlists)
+    {
+      i.songs.splice(i.songs.indexOf(id),1)
+    }
+  }
+  else
+  {
+    throw("shit on your face mother fucker");
   }
   
 }
 
 function addSong(title, album, artist, duration, id) 
 {
-  if(!(typeof(id) === "number"))
+  if (arguments.length < 4 || !(typeof(id) === "number"))
   {
-    id = player.numberOfSongs(+1);
+    id = player.numberOfSongs;
+    player.numberOfSongs+=1;
   }
-  duration = duration.split(":");
-  duration = parseInt(duration[0]*60) + parseInt(duration[1]);
+  duration.split(":")
+  duartion = parseInt(duartion[0] *60) + parseInt(duartion[1]);
 
-  player.songs[length] = 
+  let newSong = 
   {
       title: title,
       album: album,
       artist: artist,
       duration: duration,
-      id: id
-      
+      id: id,
   }
-  return id;
+   player.songs.push(newSong);
+   return id;
 }
 
 function removePlaylist(id) 
@@ -121,8 +129,23 @@ function playPlaylist(id)
 
 }
 
-function editPlaylist(playlistId, songId) {
-  // your code here
+function editPlaylist(playlistId, songId)
+{
+  let songById = player.songs[player.songs.findIndex(i => i.id === songId)];
+  let indexPlaylist = player.playlists.findIndex(i => i.id===playlistId)
+  if (player.playlists[indexPlaylist].songs.includes(songId))
+  {
+    player.playlists[indexPlaylist].songs.push(songById);
+  }
+  else if (player.playlists[indexPlaylist].songs.length === 1)
+  {
+    removePlaylist(player.playlists[indexPlaylist].id);
+  }
+  else
+  {
+    let songPlace = player.playlists[indexPlaylist].songs.indexOf(songId)
+    player.playlists[indexPlaylist].songs.splice(songPlace , 1);
+  }
 }
 
 function playlistDuration(id) {
