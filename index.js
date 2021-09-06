@@ -51,13 +51,20 @@ const player = {
   numberOfSongs:6,
   playSong(song)
   {
-    console.log(/* your code here */)
+    for (let i of player.songs)
+    {
+      if (song[id] === i[id])
+      {
+        return i;
+      }
+    }
+    console.log("Undefined");
   },
 }
 
 function playSong(id) 
 {
-  console.log(player.songs[id]);
+  console.log(player.playSong(id));
 }
 
 function removeSong(id)
