@@ -295,8 +295,37 @@ function searchByQuery(query)
   
 }
 
-function searchByDuration(duration) {
-  // your code here
+function searchByDuration(duration) 
+{
+    duration = duration.split(":")
+    duration = parseInt(duration[0])*60 + parseInt(duration[1]);
+    let closestdur = Math.abs(duration - player.songs[0].duration);
+    let closest = player.songs[0]
+    console.log(closestdur)
+    for (let song of player.songs)
+    {
+      console.log(Math.abs(duration - song.duration))
+      if (Math.abs(duration - song.duration) < closestdur)
+          {
+            
+            closest = song;
+            closestdur = Math.abs(duration - song.duration);
+            console.log(closestdur)
+            
+          }
+    }
+    for (let playlist of player.playlists)
+    {
+      console.log(Math.abs(duration-playlistDuration(playlist.id)))
+      if (Math.abs(duration-playlistDuration(playlist.id)) < closestdur)
+      {
+        closest = playlist;
+        closestdur = Math.abs(duration - playlist.duration) < closestdur;
+      }
+    }
+    console.log(closest)
+    return closest;
+    
 }
 
 module.exports = {
@@ -324,3 +353,5 @@ for (let i of arr[1])
 {
   console.log(i);
 }
+
+console.log(searchByDuration("10:00"))
