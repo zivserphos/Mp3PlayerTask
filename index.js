@@ -51,13 +51,32 @@ const player = {
   numberOfSongs:6,
   playSong(song)
   {
-    return player.songs[player.songs.findIndex(i => i[id] === song[id])];
+    let newDuration = [Math.floor(song.duration/60) , song.duration%60];
+    newDuration = newDuration.join(":")
+    song.duration = newDuration;
+    if(song.duration.length < 4)
+    {
+      song.duration = parseInt(song.duration[0]*60) + parseInt(song.duration[1]*10) + parseInt(song.duration[2])
+    }
+
+    console.log(song.duration)
+    return song;
   },
 }
 
 function playSong(id) 
 {
-  console.log(player.playSong(id));
+  let indexById = player.songs.findIndex(i => i.id === id);
+  let originDuration = player.songs[indexById].duration
+  if (indexById === -1)
+  {
+    throw("YOU PICKED A WRONG ID, THERE ISN'T A SONG WITH THAT ID");
+  }
+  else
+  {
+    console.log(player.playSong(player.songs[indexById]))
+    player.songs[indexById].duration = originDuration;
+  }
 }
 
 function removeSong(id)
@@ -161,30 +180,50 @@ function createPlaylist(name, id)
 function playPlaylist(id) 
 {
   let index = player.playlists.findIndex(i => i.id === id)
-  for (let idSong of player.playlists[index][songs])
+  if (index === -1)
   {
-    playSong(idSong);
+    throw "YOU PICKED A WRONG ID";
+  }
+  else
+  {
+    for (let song of player.playlists[index].songs)
+    {
+      playSong(idSong);
+    }
   }
 
 }
 
 function editPlaylist(playlistId, songId)
 {
-  let songById = player.songs[player.songs.findIndex(i => i.id === songId)];
-  let indexPlaylist = player.playlists.findIndex(i => i.id===playlistId)
-  if (player.playlists[indexPlaylist].songs.includes(songId))
-  {
-    player.playlists[indexPlaylist].songs.push(songById);
-  }
-  else if (player.playlists[indexPlaylist].songs.length === 1)
-  {
-    removePlaylist(player.playlists[indexPlaylist].id);
-  }
-  else
-  {
-    let songPlace = player.playlists[indexPlaylist].songs.indexOf(songId)
-    player.playlists[indexPlaylist].songs.splice(songPlace , 1);
-  }
+ let indexPlaylist = player.playlists.findIndex(i => i.id === playlistId);
+ let songIndex = player.songs.findIndex(i => i.id === songId);
+ if (songIndex === -1)
+ {
+   throw("There isn't a song with that id you should try again");
+ }
+ else if (indexPlaylist === -1)
+ {
+   throw ("There isn't a playlist with that id you should try again")
+ }
+ let songPlace = player.playlists[indexPlaylist].songs.indexOf(songId)
+ if (songPlace === -1)
+ {
+    player.playlists[indexPlaylist].songs.push(songId);
+ }
+ else
+ {
+   if(player.playlists[indexPlaylist].songs.length === 1)
+   {
+     removePlaylist(playlistId)
+   }
+   else
+   {
+     player.playlists[indexPlaylist].songs.splice(songPlace, 1);
+   }
+ }
+ 
+
 }
 
 function playlistDuration(id) {
@@ -213,5 +252,3 @@ module.exports = {
   searchByDuration,
 }
 
-console.log("sjgr");
-console.log(createPlaylist("mandarina"));
