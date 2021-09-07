@@ -198,7 +198,7 @@ function editPlaylist(playlistId, songId)
 {
  let indexPlaylist = player.playlists.findIndex(i => i.id === playlistId);
  let songIndex = player.songs.findIndex(i => i.id === songId);
- if (songIndex === -1)
+ if (songIndex === -1 || indexPlaylist === -1)
  {
    throw("There isn't a song with that id you should try again");
  }
@@ -226,8 +226,45 @@ function editPlaylist(playlistId, songId)
 
 }
 
-function playlistDuration(id) {
-  // your code here
+function songReturn(id)
+{
+  return player.songs[player.songs.findIndex(i => i.id === id)]
+}
+
+function durationDisplay(duration)
+{
+  let newDuration = [Math.floor(duration/60) , duration%60];
+  console.log(newDuration[1])
+  if (newDuration[1] < 10)
+  {
+      newDuration[1] = "0" + newDuration[1].toString();
+  }
+  if (newDuration[0] < 10)
+  {
+      console.log(newDuration[0])
+      newDuration[0] = "0" + newDuration[0].toString();
+      console.log(newDuration[0])
+  }
+  return newDuration.join(":");
+  
+}
+
+function playlistDuration(id)
+{
+  let sum=0;
+  let indexPlaylist = player.playlists.findIndex(i => i.id === id)
+  if (indexPlaylist === -1 )
+  {
+    throw ("WRONG input;")
+  }
+  else
+  {
+    for (let songId of player.playlists[indexPlaylist].songs)
+    {
+      sum+= songReturn(songId).duration;
+    }
+    return sum;
+  }
 }
 
 function searchByQuery(query) {
@@ -252,3 +289,4 @@ module.exports = {
   searchByDuration,
 }
 
+console.log(playlistDuration(1));
