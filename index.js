@@ -51,31 +51,20 @@ const player = {
   numberOfSongs:6,
   playSong(song)
   {
-    let newDuration = [Math.floor(song.duration/60) , song.duration%60];
-    newDuration = newDuration.join(":")
-    song.duration = newDuration;
-    if(song.duration.length < 4)
-    {
-      song.duration = parseInt(song.duration[0]*60) + parseInt(song.duration[1]*10) + parseInt(song.duration[2])
-    }
-
-    console.log(song.duration)
-    return song;
+    console.log("Playing " + song.title + " from " + song.album + " by " + song.artist + " | " + durationDisplay(song.duration) + ".");
   },
 }
 
 function playSong(id) 
 {
   let indexById = player.songs.findIndex(i => i.id === id);
-  let originDuration = player.songs[indexById].duration
   if (indexById === -1)
   {
     throw("YOU PICKED A WRONG ID, THERE ISN'T A SONG WITH THAT ID");
   }
   else
   {
-    console.log(player.playSong(player.songs[indexById]))
-    player.songs[indexById].duration = originDuration;
+    player.playSong(player.songs[indexById])
   }
 }
 
@@ -188,7 +177,7 @@ function playPlaylist(id)
   {
     for (let song of player.playlists[index].songs)
     {
-      playSong(idSong);
+      playSong(song);
     }
   }
 
@@ -234,17 +223,16 @@ function songReturn(id)
 function durationDisplay(duration)
 {
   let newDuration = [Math.floor(duration/60) , duration%60];
-  console.log(newDuration[1])
   if (newDuration[1] < 10)
   {
       newDuration[1] = "0" + newDuration[1].toString();
   }
   if (newDuration[0] < 10)
   {
-      console.log(newDuration[0])
       newDuration[0] = "0" + newDuration[0].toString();
-      console.log(newDuration[0])
+      
   }
+  
   return newDuration.join(":");
   
 }
@@ -342,16 +330,6 @@ module.exports = {
   searchByDuration,
 }
 
-let query1 = searchByQuery("t");
-let arr = Object.values(query1);
-for (let i of arr[0])
-{
-  console.log(1)
-  console.log(i);
-}
-for (let i of arr[1])
-{
-  console.log(i);
-}
 
-console.log(searchByDuration("10:00"))
+
+playPlaylist(1);
