@@ -263,12 +263,38 @@ function playlistDuration(id)
     {
       sum+= songReturn(songId).duration;
     }
+    console.log("full duration of the playlist is: " + durationDisplay(sum) + " in seconds its: " + sum);
     return sum;
   }
 }
 
-function searchByQuery(query) {
-  // your code here
+
+
+function searchByQuery(query)
+{
+  let songs = [];
+  let playlists = [];
+  query = query.toLowerCase();
+  for (let song of player.songs)
+  {
+    if (query.includes(song.title.toLowerCase()) ||  query.includes(song.album.toLowerCase()) || query.includes(song.artist.toLowerCase()))
+    {
+        console.log(song.title.toLowerCase())
+        songs.push(song);
+    }
+    
+  }
+  for (let playlist of player.playlists)
+{
+  if (query.includes(playlist.name.toLowerCase()))
+      playlists.push(playlist);
+}
+  
+
+  songs.sort((a,b) => a.title < b.title ? -1 : 1);
+  playlists.sort((a,b) => a.name < b.name ? -1 : 1);
+  console.log(songs)
+  return {songs , playlists};
 }
 
 function searchByDuration(duration) {
@@ -289,4 +315,6 @@ module.exports = {
   searchByDuration,
 }
 
-console.log(playlistDuration(1));
+let bea = searchByQuery("metal");
+console.log(bea)
+
