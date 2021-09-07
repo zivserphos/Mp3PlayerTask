@@ -277,24 +277,22 @@ function searchByQuery(query)
   query = query.toLowerCase();
   for (let song of player.songs)
   {
-    if (query.includes(song.title.toLowerCase()) ||  query.includes(song.album.toLowerCase()) || query.includes(song.artist.toLowerCase()))
+    if (song.title.toLowerCase().replace(/[\W_]/g , "").includes(query) || song.album.toLowerCase().replace(/[\W_]/g , "").includes(query) || song.artist.toLowerCase().replace(/[\W_]/g , "").includes(query))
     {
-        console.log(song.title.toLowerCase())
         songs.push(song);
     }
-    
   }
   for (let playlist of player.playlists)
 {
-  if (query.includes(playlist.name.toLowerCase()))
+  if (query.includes(playlist.name.toLowerCase().replace(/[\W_]/g , "")))
       playlists.push(playlist);
 }
   
 
-  songs.sort((a,b) => a.title < b.title ? -1 : 1);
-  playlists.sort((a,b) => a.name < b.name ? -1 : 1);
-  console.log(songs)
+  songs.sort((a,b) => a.title.toLowerCase() < b.title.toLowerCase() ? -1 : 1);
+  playlists.sort((a,b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
   return {songs , playlists};
+  
 }
 
 function searchByDuration(duration) {
@@ -315,6 +313,14 @@ module.exports = {
   searchByDuration,
 }
 
-let bea = searchByQuery("metal");
-console.log(bea)
-
+let query1 = searchByQuery("t");
+let arr = Object.values(query1);
+for (let i of arr[0])
+{
+  console.log(1)
+  console.log(i);
+}
+for (let i of arr[1])
+{
+  console.log(i);
+}
