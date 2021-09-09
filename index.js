@@ -48,7 +48,6 @@ const player = {
     { id: 5, name: 'Israeli', songs: [4, 5] },
   ],
   uniqueID: 100,
-  numberOfSongs:6,
   playSong(song)
   {
     console.log("Playing " + song.title + " from " + song.album + " by " + song.artist + " | " + durationDisplay(song.duration) + ".");
@@ -131,35 +130,31 @@ function removePlaylist(id)
 
 function createPlaylist(name, id) 
 {
+  
   if (id === undefined)
   {
-    console.log("fs")
     id = player.uniqueID;
     console.log(id);
     while (player.playlists.findIndex(i => i.id === id) !== -1)
     {
-      console.log("gssg")
-      player.numberOfPlaylists+=1;
-      id = player.numberOfPlaylists;
+      player.uniqueID+=1;;
+      id = player.uniqueID;
     }
   }
   if (typeof(id) === "number" && player.playlists.findIndex(i => i.id === id) !== -1)
   {
-    console.log(typeof(id))
-    console.log("sh")
-    throw ("you moran");
+    throw ("You picked a wrong ID for that playlist");
   }    
 
   else
   {
-    console.log("sf")
     player.playlists[player.playlists.length] = 
   {
     id: id,
     name: name,
     songs: []
   }
-  console.log(player.playlists[player.playlists.length-1])
+  
   }
   
   return id;
@@ -329,7 +324,3 @@ module.exports = {
   searchByQuery,
   searchByDuration,
 }
-
-
-
-playPlaylist(1);
